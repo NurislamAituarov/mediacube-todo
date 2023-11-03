@@ -1,5 +1,5 @@
 <template>
-  <Tutorial />
+  <TheCreateTask />
 </template>
 
 <script lang="ts">
