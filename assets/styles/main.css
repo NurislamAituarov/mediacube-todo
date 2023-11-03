@@ -17,3 +17,14 @@ body {
 
   font-family: Inter;
 }
+
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: auto;
+}
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: #2024271a;
+  border-radius: 8px;
+}
