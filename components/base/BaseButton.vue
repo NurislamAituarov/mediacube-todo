@@ -2,7 +2,6 @@
   <button class="submit">Submit</button>
 </template>
 
-
 <style scoped>
 .submit {
   padding: 12px 16px;

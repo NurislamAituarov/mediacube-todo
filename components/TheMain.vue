@@ -1,4 +1,3 @@
-
 <template>
   <div class="wrapper">
     <div>
@@ -11,7 +10,6 @@
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .wrapper {
@@ -37,4 +35,3 @@
   color: #8f99a3;
 }
 </style>
-
