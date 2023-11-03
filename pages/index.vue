@@ -1,5 +1,5 @@
 <template>
-  <TheCreateTask />
+  <TheMain />
 </template>
 
 <script lang="ts">
