@@ -1,6 +1,14 @@
 <template>
-  <button class="submit">Submit</button>
+  <button class="submit" @click="$emit('on-select')">{{ value }}</button>
 </template>
+
+<script setup lang="ts">
+interface IProps {
+  value: string
+}
+defineProps<IProps>()
+defineEmits(['on-select'])
+</script>
 
 <style scoped>
 .submit {
