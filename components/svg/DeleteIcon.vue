@@ -5,6 +5,7 @@
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('handle-click')"
   >
     <g clip-path="url(#clip0_20_1419)">
       <path
@@ -23,3 +24,7 @@
     </defs>
   </svg>
 </template>
+
+<script setup>
+defineEmits(['handle-click'])
+</script>

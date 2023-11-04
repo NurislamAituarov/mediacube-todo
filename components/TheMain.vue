@@ -7,62 +7,51 @@
         <FormCreate @on-created-task="onCreatedTask" />
       </div>
 
-      <TheTasks :tasks="tasks" @on-change-status="onChangeStatus" />
+      <TheTasks :tasks="filterTasks" @on-change-status="onChangeStatus" />
 
-      <div class="control">
-        <p v-if="!tasks.length" class="control__notice">
-          Congrat, you have no more tasks to do
-        </p>
-
-        <div v-else class="control__filter">
-          <BaseButton
-            v-for="list of controlLists"
-            :key="list"
-            :value="list"
-            :class="{ 'active-filter': activeList === list }"
-            @on-select="onSelect(list)"
-          />
-        </div>
-      </div>
+      <TheControl
+        :tasks="tasks"
+        :active-list="activeList"
+        @on-select="onSelect"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { provide, ref } from 'vue'
+import { computed, ref } from 'vue'
 import TheTasks from './tasks/TheTasks.vue'
-import ITask from '~/types'
+import TheControl from './TheControl.vue'
+import { onChangeStatus, onCreatedTask, tasks } from '@/modules/tasks'
 
-const controlLists = [
-  'Check all',
-  'All',
-  'Active',
-  'Completed',
-  'Clear completed',
-]
+// filtered tasks
 
-const tasks = ref<ITask[]>([])
+const filterTasks = computed(() => {
+  const filterCondition = activeList.value
+
+  if (filterCondition === 'Active') {
+    return tasks.value.filter((task) => !task.completed)
+  }
+
+  if (filterCondition === 'Completed') {
+    return tasks.value.filter((task) => task.completed)
+  }
+
+  return tasks.value
+})
+
+// controller
 const activeList = ref('All')
 
-function onCreatedTask(task: ITask) {
-  tasks.value.push(task)
-}
 function onSelect(value: string) {
-  activeList.value = value
+  if (value === 'Check all') {
+    tasks.value = tasks.value.map((task) => ({ ...task, completed: true }))
+  } else if (value === 'Clear completed') {
+    tasks.value = tasks.value.filter((task) => !task.completed)
+  } else {
+    activeList.value = value
+  }
 }
-
-function onChangeStatus(id: number) {
-  console.log(id)
-  tasks.value = tasks.value.map((task) => {
-    if (task.id === id) {
-      return { ...task, status: !task.status }
-    }
-
-    return task
-  })
-}
-
-provide('on-change-status', onChangeStatus)
 </script>
 
 <style scoped>
@@ -81,37 +70,5 @@ provide('on-change-status', onChangeStatus)
   flex-direction: column;
   justify-content: space-between;
   height: 719px;
-}
-.control {
-}
-.control__notice {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  letter-spacing: 0em;
-  text-align: left;
-  text-align: center;
-  color: #8f99a3;
-}
-
-.control__filter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.control__filter button {
-  padding: 8px 12px;
-  background-color: white;
-  color: #202427;
-
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 16px;
-  letter-spacing: 0em;
-}
-
-.control__filter .active-filter {
-  background-color: #2578f4;
-  color: white;
 }
 </style>

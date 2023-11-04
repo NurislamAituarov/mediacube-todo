@@ -4,35 +4,53 @@
       <MoveIcon />
       <BaseCheckbox
         :id="item.id"
-        :active="item.status"
+        :active="item.completed"
         @on-change-status="onChangeStatus"
       />
-      <p>{{ item.title }}</p>
+      <input
+        ref="refInput"
+        v-model="title"
+        class="list-item__title"
+        :class="{ ['change-title']: activeChange }"
+        type="text"
+        @blur="handleBlur"
+      />
     </div>
 
     <div class="right">
-      <PencelIcon />
-      <DeleteIcon />
+      <PencelIcon @handle-click="onClick" />
+      <DeleteIcon @handle-click="onRemoveTask(item.id)" />
     </div>
   </li>
 </template>
 
 
 <script setup lang="ts">
-import { inject } from 'vue'
+import { ref } from 'vue'
 import MoveIcon from '@/components/svg/MoveIcon.vue'
 import DeleteIcon from '@/components/svg/DeleteIcon.vue'
 import PencelIcon from '@/components/svg/PencelIcon.vue'
 import BaseCheckbox from '@/components/base/BaseCheckbox.vue'
-
 import { ITask } from '~/types'
+import { onChangeStatus, onRemoveTask, onChangeTitle } from '~/modules/tasks'
 
 interface IProps {
   item: ITask
 }
-defineProps<IProps>()
+const props = defineProps<IProps>()
+const title = ref(props.item.title)
+const activeChange = ref(false)
+const refInput = ref()
 
-const onChangeStatus = inject('on-change-status') as any
+function handleBlur() {
+  activeChange.value = false
+  onChangeTitle(props.item.id, title.value)
+}
+
+function onClick() {
+  activeChange.value = true
+  refInput.value.focus()
+}
 </script>
 
 <style scoped>
@@ -55,5 +73,18 @@ const onChangeStatus = inject('on-change-status') as any
 }
 .right svg {
   cursor: pointer;
+}
+
+.list-item__title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #202427;
+  pointer-events: none;
+}
+.change-title {
+  pointer-events: auto;
 }
 </style>
