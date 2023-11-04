@@ -5,6 +5,7 @@
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('handle-click')"
   >
     <g opacity="0.65" clip-path="url(#clip0_20_1415)">
       <path
@@ -27,3 +28,8 @@
     </defs>
   </svg>
 </template>
+
+
+<script setup>
+defineEmits(['on-change-task'])
+</script>

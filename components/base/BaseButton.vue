@@ -1,5 +1,7 @@
 <template>
-  <button class="submit" @click="$emit('on-select')">{{ value }}</button>
+  <button class="btn" @click="$emit('on-select')">
+    {{ value }}
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -7,11 +9,11 @@ interface IProps {
   value: string
 }
 defineProps<IProps>()
-defineEmits(['on-select'])
+defineEmits(['on-select', 'on-click'])
 </script>
 
 <style scoped>
-.submit {
+.btn {
   padding: 12px 16px;
   border-radius: 8px;
   background-color: #2578f4;
@@ -24,5 +26,12 @@ defineEmits(['on-select'])
   border: none;
   color: white;
   cursor: pointer;
+  transition: all 0.4s;
+}
+
+.btn:active {
+  background-color: #2578f4;
+  color: white;
+  opacity: 0.5;
 }
 </style>

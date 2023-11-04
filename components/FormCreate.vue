@@ -20,7 +20,7 @@ function onSubmit() {
   emit('on-created-task', {
     id: new Date().getTime(),
     title: title.value,
-    status: false,
+    completed: false,
   })
 
   title.value = ''

@@ -1,0 +1,72 @@
+<template>
+  <div class="control">
+    <p v-if="!tasks.length" class="control__notice">
+      Congrat, you have no more tasks to do
+    </p>
+
+    <div v-else class="control__filter">
+      <BaseButton
+        v-for="list of controlLists"
+        :key="list"
+        :value="list"
+        :class="{ 'active-filter': activeList === list }"
+        @on-select="$emit('on-select', list)"
+      />
+    </div>
+  </div>
+</template>
+
+
+<script setup lang="ts">
+import { ITask } from '~/types'
+const controlLists = [
+  'Check all',
+  'All',
+  'Active',
+  'Completed',
+  'Clear completed',
+]
+interface IProps {
+  tasks: ITask[]
+  activeList: string
+}
+
+defineProps<IProps>()
+defineEmits(['on-select'])
+</script>
+
+
+<style scoped>
+.control {
+}
+.control__notice {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  text-align: center;
+  color: #8f99a3;
+}
+
+.control__filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.control__filter button {
+  padding: 8px 12px;
+  background-color: white;
+  color: #202427;
+
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0em;
+}
+
+.control__filter .active-filter {
+  background-color: #2578f4;
+  color: white;
+}
+</style>
