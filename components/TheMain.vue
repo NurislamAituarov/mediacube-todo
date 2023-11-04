@@ -9,6 +9,14 @@
 
       <TheTasks :tasks="filterTasks" @on-change-status="onChangeStatus" />
 
+      <div v-if="tasks.length" class="progress">
+        <ProgressBox title="Completed" :tasks-filtered="completedTasks" />
+        <ProgressBox
+          title="To be finished"
+          :tasks-filtered="implementationTasks"
+        />
+      </div>
+
       <TheControl
         :tasks="tasks"
         :active-list="activeList"
@@ -20,9 +28,16 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import TheTasks from './tasks/TheTasks.vue'
 import TheControl from './TheControl.vue'
-import { onChangeStatus, onCreatedTask, tasks } from '@/modules/tasks'
+import TheTasks from './tasks/TheTasks.vue'
+import ProgressBox from './ProgressBox.vue'
+import {
+  completedTasks,
+  implementationTasks,
+  onChangeStatus,
+  onCreatedTask,
+  tasks,
+} from '@/modules/tasks'
 
 // filtered tasks
 
@@ -70,5 +85,13 @@ function onSelect(value: string) {
   flex-direction: column;
   justify-content: space-between;
   height: 719px;
+}
+.progress {
+  max-width: 410px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
 }
 </style>

@@ -26,9 +26,12 @@ defineEmits(['on-select', 'on-click'])
   border: none;
   color: white;
   cursor: pointer;
-  transition: all 0.4s;
+  transition: all 0.3s;
 }
 
+.btn:hover {
+  box-shadow: 0px 0px 3px rgb(171, 171, 171);
+}
 .btn:active {
   background-color: #2578f4;
   color: white;

@@ -4,9 +4,16 @@
       Congrat, you have no more tasks to do
     </p>
 
-    <div v-else class="control__filter">
+    <div
+      v-else
+      class="control__filter"
+      :class="{
+        'control__filter-left': classes === 'left',
+        'control__filter-right': classes === 'right',
+      }"
+    >
       <BaseButton
-        v-for="list of controlLists"
+        v-for="list of filteredControlLists"
         :key="list"
         :value="list"
         :class="{ 'active-filter': activeList === list }"
@@ -18,6 +25,8 @@
 
 
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue'
+import { completedTasks, implementationTasks } from '~/modules/tasks'
 import { ITask } from '~/types'
 const controlLists = [
   'Check all',
@@ -31,14 +40,36 @@ interface IProps {
   activeList: string
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
 defineEmits(['on-select'])
+const classes = ref('left')
+
+const filteredControlLists = computed(() => {
+  if (props.tasks.length === completedTasks.value.length) {
+    return ['All', 'Clear completed']
+  }
+  if (props.tasks.length === implementationTasks.value.length) {
+    return ['Check all', 'All']
+  }
+
+  return controlLists
+})
+
+watch(filteredControlLists, (value) => {
+  if (value.length === 2) {
+    if (value[0] === 'All') {
+      classes.value = 'right'
+    } else {
+      classes.value = 'left'
+    }
+  } else {
+    classes.value = ''
+  }
+})
 </script>
 
 
 <style scoped>
-.control {
-}
 .control__notice {
   font-size: 14px;
   font-weight: 400;
@@ -54,6 +85,16 @@ defineEmits(['on-select'])
   align-items: center;
   justify-content: space-between;
 }
+
+.control__filter-left {
+  justify-content: flex-start;
+  gap: 115px;
+}
+.control__filter-right {
+  justify-content: flex-end;
+  gap: 68px;
+}
+
 .control__filter button {
   padding: 8px 12px;
   background-color: white;

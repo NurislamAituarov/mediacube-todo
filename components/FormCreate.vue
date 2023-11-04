@@ -1,12 +1,12 @@
 <template>
-  <form class="form" @submit.prevent="onSubmit">
+  <form class="form" :class="{ empty: !title }" @submit.prevent="onSubmit">
     <input
       v-model="title"
       class="input__create"
       type="text"
       placeholder="Add new todo..."
     />
-    <BaseButton value="Submit" />
+    <BaseButton v-if="title" value="Submit" class="anim" />
   </form>
 </template>
 
@@ -47,5 +47,22 @@ function onSubmit() {
   letter-spacing: 0em;
   text-align: left;
   outline: none;
+}
+
+.empty {
+  justify-content: center;
+}
+
+.anim {
+  animation: 0.5s show ease;
+}
+
+@keyframes show {
+  from {
+    transform: translateX(100px);
+  }
+  to {
+    transform: translateX(0px);
+  }
 }
 </style>
