@@ -11,8 +11,8 @@
         ref="refInput"
         v-model="title"
         class="list-item__title"
-        :class="{ ['change-title']: activeChange }"
         type="text"
+        :class="{ ['change-title']: activeChange, completed: item.completed }"
         @blur="handleBlur"
       />
     </div>
@@ -86,5 +86,8 @@ function onClick() {
 }
 .change-title {
   pointer-events: auto;
+}
+.completed {
+  color: #8f99a3;
 }
 </style>

@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { ITask } from '~/types'
 
 export const tasks = ref<ITask[]>([])
@@ -30,3 +30,11 @@ export function onChangeTitle(id: number, value: string) {
     return task
   })
 }
+
+export const completedTasks = computed(() => {
+  return tasks.value.filter((task) => task.completed)
+})
+
+export const implementationTasks = computed(() => {
+  return tasks.value.filter((task) => !task.completed)
+})
