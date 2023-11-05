@@ -78,4 +78,10 @@ const numberTasks = computed(() => {
 .progress__line-finished {
   background-color: #ef5da8;
 }
+
+@media all and (max-width: 485px) {
+  .progress__box {
+    width: 100%;
+  }
+}
 </style>

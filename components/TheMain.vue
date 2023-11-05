@@ -121,4 +121,22 @@ function onSelect(value: string) {
   justify-content: space-between;
   gap: 30px;
 }
+
+@media all and (max-width: 485px) {
+  .wrapper {
+    margin: 0px auto;
+    border-radius: 0;
+    padding: 18px;
+  }
+  .container {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    gap: 20px;
+  }
+  .progress {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
 </style>
