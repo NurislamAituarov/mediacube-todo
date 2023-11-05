@@ -1,5 +1,9 @@
 <template>
-  <form class="form" :class="{ empty: !title }" @submit.prevent="onSubmit">
+  <form
+    class="form"
+    :class="{ empty: !title }"
+    @submit.prevent="title && onSubmit()"
+  >
     <input
       v-model="title"
       class="input__create"

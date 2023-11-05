@@ -32,7 +32,7 @@ import DeleteIcon from '@/components/svg/DeleteIcon.vue'
 import PencelIcon from '@/components/svg/PencelIcon.vue'
 import BaseCheckbox from '@/components/base/BaseCheckbox.vue'
 import { ITask } from '~/types'
-import { onChangeStatus, onRemoveTask, onChangeTitle } from '~/modules/tasks'
+import { onChangeStatus, onRemoveTask, onEditTitle } from '~/modules/tasks'
 
 interface IProps {
   item: ITask
@@ -44,7 +44,7 @@ const refInput = ref()
 
 function handleBlur() {
   activeChange.value = false
-  onChangeTitle(props.item.id, title.value)
+  onEditTitle(props.item.id, title.value)
 }
 
 function onClick() {

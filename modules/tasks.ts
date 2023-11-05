@@ -31,7 +31,7 @@ export function onRemoveTask(id: number) {
   setItem('tasks', tasks.value)
 }
 
-export function onChangeTitle(id: number, value: string) {
+export function onEditTitle(id: number, value: string) {
   tasks.value = tasks.value.map((task) => {
     if (task.id === id) {
       return { ...task, title: value }

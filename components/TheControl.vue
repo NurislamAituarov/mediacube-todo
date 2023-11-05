@@ -26,15 +26,10 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { controlLists } from '~/lib/contants'
 import { completedTasks, implementationTasks } from '~/modules/tasks'
 import { ITask } from '~/types'
-const controlLists = [
-  'Check all',
-  'All',
-  'Active',
-  'Completed',
-  'Clear completed',
-]
+
 interface IProps {
   tasks: ITask[]
   activeList: string
