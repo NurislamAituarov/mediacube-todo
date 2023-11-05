@@ -1,6 +1,7 @@
 <template>
   <div class="control">
     <p v-if="!tasks.length" class="control__notice">
+      <CheckSuccess />
       Congrat, you have no more tasks to do
     </p>
 
@@ -26,6 +27,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import CheckSuccess from './svg/CheckSuccess.vue'
 import { controlLists } from '~/lib/contants'
 import { completedTasks, implementationTasks } from '~/modules/tasks'
 import { ITask } from '~/types'
@@ -73,6 +75,10 @@ watch(filteredControlLists, (value) => {
   text-align: left;
   text-align: center;
   color: #8f99a3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .control__filter {
