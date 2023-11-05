@@ -24,7 +24,6 @@
   </li>
 </template>
 
-
 <script setup lang="ts">
 import { ref } from 'vue'
 import MoveIcon from '@/components/svg/MoveIcon.vue'

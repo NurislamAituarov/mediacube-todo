@@ -29,7 +29,6 @@
   </svg>
 </template>
 
-
 <script setup>
 defineEmits(['on-change-task'])
 </script>
