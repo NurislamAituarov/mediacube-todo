@@ -1,7 +1,7 @@
 <template>
   <li class="list-item">
     <div class="left">
-      <MoveIcon />
+      <MoveIcon class="handle" />
       <BaseCheckbox
         :id="item.id"
         :active="item.completed"
@@ -83,11 +83,15 @@ function onClick() {
   text-align: left;
   color: #202427;
   pointer-events: none;
+  margin-left: 2px;
 }
 .change-title {
   pointer-events: auto;
 }
 .completed {
   color: #8f99a3;
+}
+.handle {
+  cursor: pointer;
 }
 </style>
