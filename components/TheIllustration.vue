@@ -19,4 +19,14 @@
 .illustration__img {
   margin-bottom: 48px;
 }
+
+@media all and (max-width: 485px) {
+  .illustration {
+    margin-bottom: 20px;
+  }
+  .illustration__img {
+    width: 140px;
+    margin-bottom: 18px;
+  }
+}
 </style>

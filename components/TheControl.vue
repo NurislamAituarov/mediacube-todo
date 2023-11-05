@@ -109,4 +109,11 @@ watch(filteredControlLists, (value) => {
   background-color: #2578f4;
   color: white;
 }
+
+@media all and (max-width: 485px) {
+  .control__filter {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+}
 </style>

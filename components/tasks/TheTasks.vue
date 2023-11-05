@@ -75,4 +75,10 @@ function isDragging() {
 .list-group-item i {
   cursor: pointer;
 }
+
+@media all and (max-width: 485px) {
+  .tasks {
+    width: 100%;
+  }
+}
 </style>
