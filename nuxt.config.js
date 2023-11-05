@@ -16,7 +16,7 @@ export default {
         rel: 'icon',
         type: 'image/x-icon',
         href:
-          process.env === 'production'
+          process.env.NODE_ENV === 'production'
             ? '/mediacube-todo/favicon.ico'
             : '/favicon.ico',
       },
