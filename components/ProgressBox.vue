@@ -1,6 +1,6 @@
 <template>
   <div class="progress__box">
-    <p class="progress__number">{{ tasksFiltered.length }} tasks</p>
+    <p class="progress__number">{{ numberTasks }} tasks</p>
     <h2 class="progress__title">{{ title }}</h2>
     <div class="progress__line">
       <div
@@ -29,6 +29,13 @@ const activeProgressPercent = computed(() => {
   const percent = (props.tasksFiltered.length * 100) / tasks.value.length
 
   return `${percent}%`
+})
+
+const numberTasks = computed(() => {
+  if (props.title === 'Completed') {
+    return tasks.value.length
+  }
+  return props.tasksFiltered.length
 })
 </script>
 

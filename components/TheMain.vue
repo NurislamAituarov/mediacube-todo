@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import TheControl from './TheControl.vue'
 import TheTasks from './tasks/TheTasks.vue'
 import ProgressBox from './ProgressBox.vue'
@@ -36,8 +36,15 @@ import {
   implementationTasks,
   onChangeStatus,
   onCreatedTask,
+  setTasks,
   tasks,
 } from '@/modules/tasks'
+import { getItem, setItem } from '~/store'
+import { ITask } from '~/types'
+
+onMounted(() => {
+  getItem('tasks') && setTasks(getItem('tasks'))
+})
 
 // filtered tasks
 
@@ -57,14 +64,31 @@ const filterTasks = computed(() => {
 
 // controller
 const activeList = ref('All')
+// функции для обновления списка задач и активного списка
+
+function updateTasks(newTasks: ITask[]) {
+  tasks.value = newTasks
+  setItem('tasks', newTasks)
+}
+
+function updateActiveList(newActiveList: string) {
+  activeList.value = newActiveList
+}
 
 function onSelect(value: string) {
   if (value === 'Check all') {
-    tasks.value = tasks.value.map((task) => ({ ...task, completed: true }))
+    const updatedTasks = tasks.value.map((task) => ({
+      ...task,
+      completed: true,
+    }))
+    updateTasks(updatedTasks)
+    updateActiveList('All')
   } else if (value === 'Clear completed') {
-    tasks.value = tasks.value.filter((task) => !task.completed)
+    const updatedTasks = tasks.value.filter((task) => !task.completed)
+    updateTasks(updatedTasks)
+    updateActiveList('All')
   } else {
-    activeList.value = value
+    updateActiveList(value)
   }
 }
 </script>
