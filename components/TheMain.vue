@@ -7,7 +7,11 @@
         <FormCreate @on-created-task="onCreatedTask" />
       </div>
 
-      <TheTasks :tasks="filterTasks" @on-change-status="onChangeStatus" />
+      <TheTasks
+        v-if="tasks.length"
+        :tasks="filterTasks"
+        @on-change-status="onChangeStatus"
+      />
 
       <div v-if="tasks.length" class="progress">
         <ProgressBox title="Completed" :tasks-filtered="completedTasks" />
