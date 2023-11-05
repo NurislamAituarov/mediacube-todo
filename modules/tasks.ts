@@ -1,10 +1,17 @@
 import { computed, ref } from 'vue'
+import { setItem } from '~/store'
 import { ITask } from '~/types'
 
 export const tasks = ref<ITask[]>([])
 
+export function setTasks(items: ITask[]) {
+  tasks.value = items
+}
+
 export function onCreatedTask(task: ITask) {
   tasks.value.push(task)
+
+  setItem('tasks', tasks.value)
 }
 
 export function onChangeStatus(id: number) {
@@ -15,10 +22,13 @@ export function onChangeStatus(id: number) {
 
     return task
   })
+
+  setItem('tasks', tasks.value)
 }
 
 export function onRemoveTask(id: number) {
   tasks.value = tasks.value.filter((task) => task.id !== id)
+  setItem('tasks', tasks.value)
 }
 
 export function onChangeTitle(id: number, value: string) {
@@ -29,6 +39,7 @@ export function onChangeTitle(id: number, value: string) {
 
     return task
   })
+  setItem('tasks', tasks.value)
 }
 
 export const completedTasks = computed(() => {

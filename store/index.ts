@@ -1,27 +1,7 @@
-import { ITask } from '~/types'
-
-interface IState {
-  tasks: ITask[]
+export const getItem = (key: any) => {
+  const item = localStorage.getItem(key)
+  return item ? JSON.parse(item) : null
 }
-
-export const state: IState = {
-  tasks: [],
-}
-
-export const getters = {
-  getCounter(state: IState) {
-    return state.tasks
-  },
-}
-
-export const mutations = {
-  createTask(state: IState, task: ITask) {
-    state.tasks.push(task)
-  },
-}
-
-export const actions = {
-  createTask({ commit }: any, task: ITask) {
-    commit('createTask', task)
-  },
+export const setItem = (key: string, value: any) => {
+  localStorage.setItem(key, JSON.stringify(value))
 }
