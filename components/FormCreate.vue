@@ -69,4 +69,13 @@ function onSubmit() {
     transform: translateX(0px);
   }
 }
+
+@media all and (max-width: 485px) {
+  .form {
+    gap: 20px;
+  }
+  .input__create {
+    width: 100%;
+  }
+}
 </style>

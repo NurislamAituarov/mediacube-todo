@@ -127,6 +127,7 @@ function onSelect(value: string) {
     margin: 0px auto;
     border-radius: 0;
     padding: 18px;
+    overflow-x: hidden;
   }
   .container {
     width: 100%;
