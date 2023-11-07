@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
-interface IProps {
+interface Props {
   name: string
 }
-defineProps<IProps>()
+defineProps<Props>()
 defineEmits(['on-select', 'on-click'])
 </script>
 

@@ -33,10 +33,10 @@ import BaseCheckbox from '@/components/base/BaseCheckbox.vue'
 import { Task } from '~/types'
 import { onChangeStatus, onRemoveTask, onEditTitle } from '~/modules/tasks'
 
-interface IProps {
+interface Props {
   item: Task
 }
-const props = defineProps<IProps>()
+const props = defineProps<Props>()
 const title = ref(props.item.title)
 const isCompleted = ref(false)
 const refInput = ref()

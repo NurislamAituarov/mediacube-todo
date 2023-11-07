@@ -22,11 +22,11 @@ import { Task } from '~/types'
 import { setItem } from '~/store'
 import { keys } from '~/lib/constants'
 
-interface IProps {
+interface Props {
   tasks: Task[]
 }
 
-const props = defineProps<IProps>()
+const props = defineProps<Props>()
 
 const dragOptions = {
   animation: 0,

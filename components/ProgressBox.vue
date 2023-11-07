@@ -17,12 +17,12 @@ import { computed } from 'vue'
 import { tasks } from '~/modules/tasks'
 import { Task } from '~/types'
 
-interface IProps {
+interface Props {
   title: string
   tasksFiltered: Task[]
 }
 
-const props = defineProps<IProps>()
+const props = defineProps<Props>()
 
 const activeProgressPercent = computed(() => {
   const percent = (props.tasksFiltered.length * 100) / tasks.value.length

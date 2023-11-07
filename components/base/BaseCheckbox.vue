@@ -14,12 +14,12 @@
 <script setup lang="ts">
 import CompleteIcon from '@/components/svg/CompleteIcon.vue'
 
-interface IProps {
+interface Props {
   isCompleted: boolean
   id: string
 }
 
-defineProps<IProps>()
+defineProps<Props>()
 defineEmits(['on-change-status'])
 </script>
 

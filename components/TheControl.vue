@@ -31,12 +31,12 @@ import { controlFields } from '~/lib/constants'
 import { completedTasks, incompleteTasks } from '~/modules/tasks'
 import { Task } from '~/types'
 
-interface IProps {
+interface Props {
   tasks: Task[]
   activeField: string
 }
 
-const props = defineProps<IProps>()
+const props = defineProps<Props>()
 defineEmits(['on-select'])
 const classes = ref('left')
 
