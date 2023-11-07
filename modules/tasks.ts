@@ -1,37 +1,38 @@
 import { computed, ref } from 'vue'
+import { keys } from '~/lib/constants'
 import { setItem } from '~/store'
-import { ITask } from '~/types'
+import { Task } from '~/types'
 
-export const tasks = ref<ITask[]>([])
+export const tasks = ref<Task[]>([])
 
-export function setTasks(items: ITask[]) {
+export function setTasks(items: Task[]) {
   tasks.value = items
 }
 
-export function onCreatedTask(task: ITask) {
+export function onTaskCreate(task: Task) {
   tasks.value.push(task)
 
-  setItem('tasks', tasks.value)
+  setItem(keys.tasks, tasks.value)
 }
 
-export function onChangeStatus(id: number) {
+export function onChangeStatus(id: string) {
   tasks.value = tasks.value.map((task) => {
     if (task.id === id) {
-      return { ...task, completed: !task.completed }
+      return { ...task, isCompleted: !task.isCompleted }
     }
 
     return task
   })
 
-  setItem('tasks', tasks.value)
+  setItem(keys.tasks, tasks.value)
 }
 
-export function onRemoveTask(id: number) {
+export function onRemoveTask(id: string) {
   tasks.value = tasks.value.filter((task) => task.id !== id)
-  setItem('tasks', tasks.value)
+  setItem(keys.tasks, tasks.value)
 }
 
-export function onEditTitle(id: number, value: string) {
+export function onEditTitle(id: string, value: string) {
   tasks.value = tasks.value.map((task) => {
     if (task.id === id) {
       return { ...task, title: value }
@@ -39,13 +40,13 @@ export function onEditTitle(id: number, value: string) {
 
     return task
   })
-  setItem('tasks', tasks.value)
+  setItem(keys.tasks, tasks.value)
 }
 
 export const completedTasks = computed(() => {
-  return tasks.value.filter((task) => task.completed)
+  return tasks.value.filter((task) => task.isCompleted)
 })
 
-export const implementationTasks = computed(() => {
-  return tasks.value.filter((task) => !task.completed)
+export const incompleteTasks = computed(() => {
+  return tasks.value.filter((task) => !task.isCompleted)
 })

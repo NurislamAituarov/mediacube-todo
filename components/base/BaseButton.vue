@@ -1,12 +1,12 @@
 <template>
   <button class="btn" @click="$emit('on-select')">
-    {{ value }}
+    {{ name }}
   </button>
 </template>
 
 <script setup lang="ts">
 interface IProps {
-  value: string
+  name: string
 }
 defineProps<IProps>()
 defineEmits(['on-select', 'on-click'])

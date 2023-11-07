@@ -14,11 +14,11 @@
       }"
     >
       <BaseButton
-        v-for="list of filteredControlLists"
-        :key="list"
-        :value="list"
-        :class="{ 'active-filter': activeList === list }"
-        @on-select="$emit('on-select', list)"
+        v-for="field of filteredControlFields"
+        :key="field"
+        :name="field"
+        :class="{ 'active-filter': activeField === field }"
+        @on-select="$emit('on-select', field)"
       />
     </div>
   </div>
@@ -27,32 +27,33 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import CheckSuccess from './svg/CheckSuccess.vue'
-import { controlLists } from '~/lib/contants'
-import { completedTasks, implementationTasks } from '~/modules/tasks'
-import { ITask } from '~/types'
+import { controlFields } from '~/lib/constants'
+import { completedTasks, incompleteTasks } from '~/modules/tasks'
+import { Task } from '~/types'
 
 interface IProps {
-  tasks: ITask[]
-  activeList: string
+  tasks: Task[]
+  activeField: string
 }
 
 const props = defineProps<IProps>()
 defineEmits(['on-select'])
 const classes = ref('left')
 
-const filteredControlLists = computed(() => {
+const filteredControlFields = computed(() => {
   if (props.tasks.length === completedTasks.value.length) {
     return ['All', 'Clear completed']
   }
-  if (props.tasks.length === implementationTasks.value.length) {
+  if (props.tasks.length === incompleteTasks.value.length) {
     return ['Check all', 'All']
   }
 
-  return controlLists
+  return controlFields
 })
 
-watch(filteredControlLists, (value) => {
-  if (value.length === 2) {
+const fieldAmountOnAllComplete = 2
+watch(filteredControlFields, (value) => {
+  if (value.length === fieldAmountOnAllComplete) {
     if (value[0] === 'All') {
       classes.value = 'right'
     } else {

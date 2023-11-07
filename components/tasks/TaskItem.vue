@@ -4,7 +4,7 @@
       <MoveIcon class="handle" />
       <BaseCheckbox
         :id="item.id"
-        :active="item.completed"
+        :is-completed="item.isCompleted"
         @on-change-status="onChangeStatus"
       />
       <input
@@ -12,7 +12,7 @@
         v-model="title"
         class="list-item__title"
         type="text"
-        :class="{ ['change-title']: activeChange, completed: item.completed }"
+        :class="{ ['change-title']: isCompleted, completed: item.isCompleted }"
         @blur="handleBlur"
       />
     </div>
@@ -30,24 +30,24 @@ import MoveIcon from '@/components/svg/MoveIcon.vue'
 import DeleteIcon from '@/components/svg/DeleteIcon.vue'
 import PencelIcon from '@/components/svg/PencelIcon.vue'
 import BaseCheckbox from '@/components/base/BaseCheckbox.vue'
-import { ITask } from '~/types'
+import { Task } from '~/types'
 import { onChangeStatus, onRemoveTask, onEditTitle } from '~/modules/tasks'
 
 interface IProps {
-  item: ITask
+  item: Task
 }
 const props = defineProps<IProps>()
 const title = ref(props.item.title)
-const activeChange = ref(false)
+const isCompleted = ref(false)
 const refInput = ref()
 
 function handleBlur() {
-  activeChange.value = false
+  isCompleted.value = false
   onEditTitle(props.item.id, title.value)
 }
 
 function onClick() {
-  activeChange.value = true
+  isCompleted.value = true
   refInput.value.focus()
 }
 </script>
