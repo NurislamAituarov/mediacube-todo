@@ -1,11 +1,11 @@
 <template>
-  <label :for="id + ''" class="label" :class="{ checked: active }">
-    <CompleteIcon v-if="active" />
+  <label :for="id" class="label" :class="{ checked: isCompleted }">
+    <CompleteIcon v-if="isCompleted" />
     <input
-      :id="id + ''"
+      :id="id"
       type="checkbox"
       class="checkbox"
-      :checked="active"
+      :checked="isCompleted"
       @change="$emit('on-change-status', id)"
     />
   </label>
@@ -14,12 +14,12 @@
 <script setup lang="ts">
 import CompleteIcon from '@/components/svg/CompleteIcon.vue'
 
-interface IProps {
-  active: boolean
-  id: number
+interface Props {
+  isCompleted: boolean
+  id: string
 }
 
-defineProps<IProps>()
+defineProps<Props>()
 defineEmits(['on-change-status'])
 </script>
 

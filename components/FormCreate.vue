@@ -10,21 +10,22 @@
       type="text"
       placeholder="Add new todo..."
     />
-    <BaseButton v-if="title" value="Submit" class="anim" />
+    <BaseButton v-if="title" name="Submit" class="anim" />
   </form>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+const { v4: uuidv4 } = require('uuid')
 
-const emit = defineEmits(['on-created-task'])
+const emit = defineEmits(['on-task-create'])
 const title = ref('')
 
 function onSubmit() {
-  emit('on-created-task', {
-    id: new Date().getTime(),
+  emit('on-task-create', {
+    id: uuidv4(),
     title: title.value,
-    completed: false,
+    isCompleted: false,
   })
 
   title.value = ''

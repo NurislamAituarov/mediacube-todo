@@ -1,12 +1,12 @@
 <template>
   <div class="progress__box">
-    <p class="progress__number">{{ numberTasks }} tasks</p>
+    <p class="progress__number">{{ tasksAmount }} tasks</p>
     <h2 class="progress__title">{{ title }}</h2>
     <div class="progress__line">
       <div
         class="progress__line-active"
         :class="{ 'progress__line-finished': title !== 'Completed' }"
-        :style="{ width: activeProgressPercent }"
+        :style="{ width: `${activeProgressPercent}%` }"
       ></div>
     </div>
   </div>
@@ -15,22 +15,22 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { tasks } from '~/modules/tasks'
-import { ITask } from '~/types'
+import { Task } from '~/types'
 
-interface IProps {
+interface Props {
   title: string
-  tasksFiltered: ITask[]
+  tasksFiltered: Task[]
 }
 
-const props = defineProps<IProps>()
+const props = defineProps<Props>()
 
 const activeProgressPercent = computed(() => {
   const percent = (props.tasksFiltered.length * 100) / tasks.value.length
 
-  return `${percent}%`
+  return percent
 })
 
-const numberTasks = computed(() => {
+const tasksAmount = computed(() => {
   if (props.title === 'Completed') {
     return tasks.value.length
   }

@@ -6,7 +6,7 @@
       handle=".handle"
       :list="tasks"
       v-bind="dragOptions"
-      @end="isDragging"
+      @end="onDragEnd"
     >
       <transition-group type="transition" name="flip-list">
         <TaskItem v-for="task of tasks" :key="task.id" :item="task" />
@@ -16,29 +16,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import draggable from 'vuedraggable'
 import TaskItem from './TaskItem.vue'
-import { ITask } from '~/types'
+import { Task } from '~/types'
 import { setItem } from '~/store'
+import { keys } from '~/lib/constants'
 
-interface IProps {
-  tasks: ITask[]
+interface Props {
+  tasks: Task[]
 }
 
-const props = defineProps<IProps>()
+const props = defineProps<Props>()
 
-const dragOptions = computed(() => {
-  return {
-    animation: 0,
-    group: 'description',
-    disabled: false,
-    ghostClass: 'ghost',
-  }
-})
+const dragOptions = {
+  animation: 0,
+  group: 'description',
+  disabled: false,
+  ghostClass: 'ghost',
+}
 
-function isDragging() {
-  setItem('tasks', props.tasks)
+function onDragEnd() {
+  setItem(keys.tasks, props.tasks)
 }
 </script>
 

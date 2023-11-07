@@ -3,26 +3,23 @@
     <div class="container">
       <div>
         <TheIllustration />
-        <FormCreate @on-created-task="onCreatedTask" />
+        <FormCreate @on-task-create="onTaskCreate" />
       </div>
 
       <TheTasks
         v-if="tasks.length"
-        :tasks="filterTasks"
+        :tasks="filteredTasks"
         @on-change-status="onChangeStatus"
       />
 
       <div v-if="tasks.length" class="progress">
         <ProgressBox title="Completed" :tasks-filtered="completedTasks" />
-        <ProgressBox
-          title="To be finished"
-          :tasks-filtered="implementationTasks"
-        />
+        <ProgressBox title="To be finished" :tasks-filtered="incompleteTasks" />
       </div>
 
       <TheControl
         :tasks="tasks"
-        :active-list="activeList"
+        :active-field="activeField"
         @on-select="onSelect"
       />
     </div>
@@ -36,62 +33,64 @@ import TheTasks from './tasks/TheTasks.vue'
 import ProgressBox from './ProgressBox.vue'
 import {
   completedTasks,
-  implementationTasks,
+  incompleteTasks,
   onChangeStatus,
-  onCreatedTask,
+  onTaskCreate,
   setTasks,
   tasks,
 } from '@/modules/tasks'
 import { getItem, setItem } from '~/store'
-import { ITask } from '~/types'
+import { Task } from '~/types'
+import { keys } from '~/lib/constants'
 
 onMounted(() => {
-  getItem('tasks') && setTasks(getItem('tasks'))
+  const tasks = getItem('tasks')
+  if (tasks) setTasks(tasks)
 })
 
 // filtered tasks
 
-const filterTasks = computed(() => {
-  const filterCondition = activeList.value
+const filteredTasks = computed(() => {
+  const selectedField = activeField.value
 
-  if (filterCondition === 'Active') {
-    return tasks.value.filter((task) => !task.completed)
+  if (selectedField === 'Active') {
+    return tasks.value.filter((task) => !task.isCompleted)
   }
 
-  if (filterCondition === 'Completed') {
-    return tasks.value.filter((task) => task.completed)
+  if (selectedField === 'Completed') {
+    return tasks.value.filter((task) => task.isCompleted)
   }
 
   return tasks.value
 })
 
 // controller
-const activeList = ref('All')
+const activeField = ref('All')
 // функции для обновления списка задач и активного списка
 
-function updateTasks(newTasks: ITask[]) {
-  tasks.value = newTasks
-  setItem('tasks', newTasks)
+function updateTasks(updatedTasks: Task[]) {
+  tasks.value = updatedTasks
+  setItem(keys.tasks, updatedTasks)
 }
 
-function updateActiveList(newActiveList: string) {
-  activeList.value = newActiveList
+function updateActiveField(updatedField: string) {
+  activeField.value = updatedField
 }
 
 function onSelect(value: string) {
   if (value === 'Check all') {
     const updatedTasks = tasks.value.map((task) => ({
       ...task,
-      completed: true,
+      isCompleted: true,
     }))
     updateTasks(updatedTasks)
-    updateActiveList('All')
+    updateActiveField('All')
   } else if (value === 'Clear completed') {
-    const updatedTasks = tasks.value.filter((task) => !task.completed)
+    const updatedTasks = tasks.value.filter((task) => !task.isCompleted)
     updateTasks(updatedTasks)
-    updateActiveList('All')
+    updateActiveField('All')
   } else {
-    updateActiveList(value)
+    updateActiveField(value)
   }
 }
 </script>
